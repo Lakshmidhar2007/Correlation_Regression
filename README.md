@@ -1,4 +1,3 @@
-# Correlation and regression for data analysis
 # Aim : 
 
 To analyze given data using co-efficient of correlation and regression line
@@ -23,53 +22,45 @@ If y represents the dependent variable and x the independent variable, this rela
 
 ```py
 import numpy as np
+import math
 import matplotlib.pyplot as plt
-
-# Getting Inputs
-print("Enter the values of X separated by space")
-X = np.array([int(i) for i in input().split()])
-
-print("Enter the values of Y separated by space")
-Y = np.array([int(i) for i in input().split()])
-
-N = len(X)
-print(X, Y, N, sep='\n')
-
-# Calculating Sums and Means
-SumX = np.sum(X)
-SumY = np.sum(Y)
-SumX2 = np.sum(X**2)
-SumY2 = np.sum(Y**2)
-SumXY = np.sum(X * Y)
-
-MeanX = SumX / N
-MeanY = SumY / N
-
-# Calculating Regression Coefficient
-num = (N * SumXY) - (SumX * SumY)
-den = (N * SumX2) - (SumX**2)
-RegressionCoef = num / den
-
-# Regression Line Equation
-print(f"The Regression Y on X is Y = {RegressionCoef:.3f} ( X - {MeanX:.3f}) + {MeanY:.3f}")
-
-# Define Regression Function
-def Regression(x):
-    return MeanY + (RegressionCoef * (x - MeanX))
-
-# Plotting the Graph
-plt.scatter(X, Y)
-plt.plot(X, Regression(X))
-plt.xlabel("X-Data")
-plt.ylabel("Y-Data")
-plt.legend(['Data points', 'Regression Line'])
+x=[ int(i) for i in input().split()]
+y=[ int(i) for i in input().split()]
+N=len(x)
+Sx=0
+Sy=0
+Sxy=0
+Sx2=0
+Sy2=0
+for i in range(0,N):
+    Sx=Sx+x[i]
+    Sy=Sy+y[i]
+    Sxy=Sxy+x[i]*y[i]
+    Sx2=Sx2+x[i]**2
+    Sy2=Sy2+y[i]**2
+r=(N*Sxy-Sx*Sy)/(math.sqrt(N*Sx2-Sx**2)*math.sqrt(N*Sy2-Sy**2))
+print("The Correlation coefficient is %0.3f"%r)
+byx=(N*Sxy-Sx*Sy)/(N*Sx2-Sx**2)
+xmean=Sx/N
+ymean=Sy/N
+print("The Regression line Y on X is ::: y = %0.3f + %0.3f (x-%0.3f)"%(ymean,byx,xmean))
+plt.scatter(x,y)
+def Reg(x):
+  return ymean + byx*(x-xmean)
+x=np.linspace(20,80,51)
+y1=Reg(x)
+plt.plot(x,y1,'r')
+plt.xlabel('x-data')
+plt.ylabel('y-data')
+plt.legend(['Regression Line','Data points'])
 plt.show()
 ```
 
 
 # Output
 
-![alt text](image.png)
+<img width="628" height="475" alt="image" src="https://github.com/user-attachments/assets/8b51a9b7-f8f2-4d96-b901-59fff96a3019" />
+
 
  
 # Result
